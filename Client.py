@@ -59,6 +59,7 @@ def camRight():
     velCam = -CAM
 
 def camStop():
+    print(44)
     isStop = True
     if servo.value <= -CAM:
         velCam = CAM
