@@ -114,7 +114,7 @@ while True:
         stop()
         camStop()
     
-
+    print(5)
     if isStop:
         if velCam != 0 and servo.value != 0:
             servo.value += velCam
