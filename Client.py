@@ -50,6 +50,7 @@ velCam = 0.0
 isStop = True
 
 def camLeft():
+    print(22)
     isStop = False
     velCam = CAM
 
@@ -114,7 +115,7 @@ while True:
         stop()
         camStop()
     
-    if isStop == True:
+    if isStop:
         print(5)
         camStop()
         print(7)
