@@ -116,12 +116,13 @@ while True:
     
     print(5)
     if isStop:
+        camStop()
         if velCam != 0 and servo.value != 0:
             servo.value += velCam
     else:
         if velCam > 0 and servo.value < 0.92:
             servo.value += velCam
-        elif velCam < 0 and servo.value > -0.02:
+        elif velCam < 0 and servo.value > -0.92:
             servo.value += velCam
     
 s.close()
