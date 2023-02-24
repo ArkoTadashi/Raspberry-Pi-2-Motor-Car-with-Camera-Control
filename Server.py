@@ -52,8 +52,12 @@ def main(window):
                 #     print(action)
                 c.send(data.encode())
                 next_key = key
+                first = False
                 while next_key == key:
                     next_key = window.getch()
+                    if not first:
+                        next_key = key
+                        first = True
                     
                 # KEY RELEASED
                 #stop()
