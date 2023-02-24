@@ -28,6 +28,7 @@ def main(window):
             if key != -1:
                 # KEY PRESSED
                 curses.halfdelay(3)
+                print(key)
                 #action = actions.get(key)
                 data = 'pp smol'
                 if key == 97:
@@ -38,13 +39,22 @@ def main(window):
                     data = 'forward'
                 if key == 115:
                     data = 'reverse'
-                c.send(data.encode())
+                # if key == 259:
+                #     data = 'camfor'
+                if key == 260:
+                    data = 'camlef'
+                # if key == 258:
+                #     data = 'camrev'
+                if key == 261:
+                    data = 'camrig'
                 # if action is not None:
                 #     #action()
                 #     print(action)
+                c.send(data.encode())
                 next_key = key
                 while next_key == key:
                     next_key = window.getch()
+                    
                 # KEY RELEASED
                 #stop()
                 data = 'stop'

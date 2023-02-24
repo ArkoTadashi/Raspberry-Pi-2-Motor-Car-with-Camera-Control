@@ -2,6 +2,12 @@ from gpiozero import Motor
 import socket
 import time
 
+from gpiozero import Servo
+from gpiozero.pins.pigpio import PiGPIOFactory
+
+factory = PiGPIOFactory()
+servo = Servo(14, min_pulse_width = 0.5/1000, max_pulse_width = 2.5/1000, pin_factory = factory)
+
 flmotor = Motor(forward=16, backward=17)
 frmotor = Motor(forward=18, backward=13)
 blmotor = Motor(forward=11, backward=12)
@@ -38,6 +44,20 @@ def stop():
     blmotor.stop()
     brmotor.stop()
 
+servo.value = 0.0
+
+def camLeft():
+    whiifle servo.value > -0.94:
+        servo.value -= 0.05
+        time.sleep(0.05)
+
+def camRight():
+    if servo.value < 0.94:
+        servo.value += 0.05
+        time.sleep(0.05)
+
+def camStop():
+    servo.value = 0
 
 s = socket.socket()
 host = '192.168.0.107'
@@ -67,8 +87,15 @@ while True:
     if data == 'right':
         print('daane ja')
         right()
+    if data == 'camlef':
+        print('baam e dekh')
+        camLeft()
+    if data == 'camrig':
+        print('daan e dekh')
+        camRight()
     if data == 'stop':
         print('tham re baap')
         stop()
+        camStop()
 s.close()
 
