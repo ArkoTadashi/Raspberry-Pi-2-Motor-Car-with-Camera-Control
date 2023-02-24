@@ -108,6 +108,7 @@ while True:
     if data == 'camlef':
         print('baam e dekh')
         camLeft()
+        print(isStop)
     if data == 'camrig':
         print('daan e dekh')
         camRight()
@@ -116,6 +117,7 @@ while True:
         stop()
         camStop()
     
+    print(isStop)
     if isStop:
         print(5)
         camStop()
