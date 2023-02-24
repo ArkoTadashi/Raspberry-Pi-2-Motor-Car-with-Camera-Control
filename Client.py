@@ -50,16 +50,17 @@ velCam = 0.0
 isStop = True
 
 def camLeft():
-    print(22)
+    global isStop, velCam, CAM, servo.value
     isStop = False
     velCam = CAM
 
 def camRight():
+    global isStop, velCam, CAM, servo.value
     isStop = False
     velCam = -CAM
 
 def camStop():
-    print(44)
+    global isStop, velCam, CAM, servo.value
     isStop = True
     if servo.value <= -CAM:
         velCam = CAM
@@ -108,7 +109,6 @@ while True:
     if data == 'camlef':
         print('baam e dekh')
         camLeft()
-        print(isStop)
     if data == 'camrig':
         print('daan e dekh')
         camRight()
@@ -117,16 +117,11 @@ while True:
         stop()
         camStop()
     
-    print(isStop)
     if isStop:
-        print(5)
         camStop()
-        print(7)
         if velCam != 0:
-            print(6)
             servo.value += velCam 
     else:
-        print(8)
         if velCam > 0 and servo.value < 0.92:
             servo.value += velCam
         elif velCam < 0 and servo.value > -0.92:
