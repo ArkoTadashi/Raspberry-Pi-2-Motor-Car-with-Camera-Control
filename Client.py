@@ -50,17 +50,17 @@ velCam = 0.0
 isStop = True
 
 def camLeft():
-    global isStop, velCam, CAM, servo.value
+    global isStop, velCam, CAM
     isStop = False
     velCam = CAM
 
 def camRight():
-    global isStop, velCam, CAM, servo.value
+    global isStop, velCam, CAM
     isStop = False
     velCam = -CAM
 
 def camStop():
-    global isStop, velCam, CAM, servo.value
+    global isStop, velCam, CAM
     isStop = True
     if servo.value <= -CAM:
         velCam = CAM
