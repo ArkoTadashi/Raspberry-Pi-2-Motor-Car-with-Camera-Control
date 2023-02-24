@@ -44,22 +44,31 @@ def stop():
     blmotor.stop()
     brmotor.stop()
 
+CAM = 0.07
 servo.value = 0.0
 velCam = 0.0
 isStop = True
 
 def camLeft():
-    if servo.value > -0.94:
-        servo.value -= 0.05
-        time.sleep(0.05)
+    isStop = False
+    velCam = CAM
 
 def camRight():
-    if servo.value < 0.94:
-        servo.value += 0.05
-        time.sleep(0.05)
+    isStop = False
+    velCam = -CAM
 
 def camStop():
-    servo.value = 0
+    isStop = True
+    if servo.value < -CAM:
+        velCam = CAM
+    elif servo.value < 0:
+        velCam = -servo.value
+    elif servo.value > CAM:
+        velCam = -CAM
+    elif servo.value > 0:
+        velCam = -servo.value
+    else:
+        velCam = 0
 
 s = socket.socket()
 host = '192.168.0.107'
@@ -74,10 +83,14 @@ while True:
         time.sleep(2)
         continue
 
+s.settimeout(0.1)
 while True:
+    try:
+        pp = s.recv(1024)
+        data = pp.decode()
+    except socket.timeout:
+        data = 'pp'
     
-    pp = s.recv(1024)
-    data = pp.decode()
     if data == 'forward':
         print('shamne ja')
         forward()
@@ -100,5 +113,16 @@ while True:
         print('tham re baap')
         stop()
         camStop()
+    
+
+    if isStop:
+        if velCam != 0 and servo.value != 0:
+            servo.value += velCam
+    else:
+        if velCam > 0 and servo.value < 0.92:
+            servo.value += velCam
+        elif velCam < 0 and servo.value > -0.02:
+            servo.value += velCam
+    
 s.close()
 
