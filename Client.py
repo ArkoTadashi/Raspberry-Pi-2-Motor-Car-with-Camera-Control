@@ -45,9 +45,11 @@ def stop():
     brmotor.stop()
 
 servo.value = 0.0
+velCam = 0.0
+isStop = True
 
 def camLeft():
-    whiifle servo.value > -0.94:
+    if servo.value > -0.94:
         servo.value -= 0.05
         time.sleep(0.05)
 
@@ -73,6 +75,7 @@ while True:
         continue
 
 while True:
+    
     pp = s.recv(1024)
     data = pp.decode()
     if data == 'forward':
