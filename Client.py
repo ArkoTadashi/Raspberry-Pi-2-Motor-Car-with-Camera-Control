@@ -59,11 +59,11 @@ def camRight():
 
 def camStop():
     isStop = True
-    if servo.value < -CAM:
+    if servo.value <= -CAM:
         velCam = CAM
     elif servo.value < 0:
         velCam = -servo.value
-    elif servo.value > CAM:
+    elif servo.value >= CAM:
         velCam = -CAM
     elif servo.value > 0:
         velCam = -servo.value
@@ -114,10 +114,11 @@ while True:
         stop()
         camStop()
     
-    print(5)
     if isStop:
+        print(5)
         camStop()
-        if velCam != 0 and servo.value != 0:
+        if velCam != 0:
+            print(6)
             servo.value += velCam
     else:
         if velCam > 0 and servo.value < 0.92:

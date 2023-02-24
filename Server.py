@@ -16,7 +16,7 @@ def main(window):
     while True:
         c, addr = s.accept()
         print('Got connection from ', addr)
-        webbrowser.open('http://' + addr[0] + ':8080')
+        # webbrowser.open('http://' + addr[0] + ':8080')
         next_key = None
         while True:
             curses.halfdelay(1)
