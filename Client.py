@@ -8,35 +8,40 @@ from gpiozero.pins.pigpio import PiGPIOFactory
 factory = PiGPIOFactory()
 servo = Servo(14, min_pulse_width = 0.5/1000, max_pulse_width = 2.5/1000, pin_factory = factory)
 
-flmotor = Motor(forward=16, backward=17)
-frmotor = Motor(forward=18, backward=13)
+frmotor = Motor(forward=16, backward=17)
+flmotor = Motor(forward=18, backward=13)
 blmotor = Motor(forward=11, backward=12)
 brmotor = Motor(forward=10, backward=9)
 
+speed = 0.5
+
 def left():
-    flmotor.backward()
-    frmotor.forward()
-    blmotor.backward()
-    brmotor.forward()
+    global speed
+    flmotor.backward(speed)
+    frmotor.forward(speed)
+    blmotor.backward(speed)
+    brmotor.forward(speed)
 
 def right():
-    flmotor.forward()
-    frmotor.backward()
-    blmotor.forward()
-    brmotor.backward()
-
+    global speed
+    flmotor.forward(speed)
+    frmotor.backward(speed)
+    blmotor.forward(speed)
+    brmotor.backward(speed)
 
 def forward():
-    flmotor.forward()
-    frmotor.forward()
-    blmotor.forward()
-    brmotor.forward()
+    global speed
+    flmotor.forward(speed)
+    frmotor.forward(speed)
+    blmotor.forward(speed)
+    brmotor.forward(speed)
 
 def reverse():
-    flmotor.backward()
-    frmotor.backward()
-    blmotor.backward()
-    brmotor.backward()
+    global speed
+    flmotor.backward(speed)
+    frmotor.backward(speed)
+    blmotor.backward(speed)
+    brmotor.backward(speed)
 
 def stop():
     flmotor.stop()
@@ -62,19 +67,19 @@ def camRight():
 def camStop():
     global isStop, velCam, CAM
     isStop = True
-    if servo.value <= -CAM:
-        velCam = CAM
+    if servo.value <= -2*CAM:
+        velCam = 2*CAM
     elif servo.value < 0:
         velCam = -servo.value
-    elif servo.value >= CAM:
-        velCam = -CAM
+    elif servo.value >= 2*CAM:
+        velCam = -2*CAM
     elif servo.value > 0:
         velCam = -servo.value
     else:
         velCam = 0
 
 s = socket.socket()
-host = '192.168.0.107'
+host = '192.168.0.100'
 port = 12345
 
 while True:
@@ -116,6 +121,14 @@ while True:
         print('tham re baap')
         stop()
         camStop()
+    if data == 'sup':
+        if speed < 1:
+            speed += 0.05
+        print('jore chol - speed ' + str(speed))
+    if data == 'sdown':
+        if speed > 0:
+            speed -= 0.05
+        print('areh aste - speed ' + str(speed))
     
     if isStop:
         camStop()

@@ -5,7 +5,7 @@ import webbrowser
 
 
 s = socket.socket()
-host = '192.168.0.107'
+host = '192.168.0.100'
 port = 12345
 s.bind((host, port))
 
@@ -16,7 +16,7 @@ def main(window):
     while True:
         c, addr = s.accept()
         print('Got connection from ', addr)
-        # webbrowser.open('http://' + addr[0] + ':8080')
+        # webbrowser.opewn('http://' + addr[0] + ':8080')
         next_key = None
         while True:
             curses.halfdelay(1)
@@ -27,7 +27,7 @@ def main(window):
                 next_key = None
             if key != -1:
                 # KEY PRESSED
-                curses.halfdelay(3)
+                curses.halfdelay(2)
                 print(key)
                 #action = actions.get(key)
                 data = 'pp smol'
@@ -39,12 +39,12 @@ def main(window):
                     data = 'forward'
                 if key == 115:
                     data = 'reverse'
-                # if key == 259:
-                #     data = 'camfor'
+                if key == 259:
+                    data = 'sup'
                 if key == 260:
                     data = 'camlef'
-                # if key == 258:
-                #     data = 'camrev'
+                if key == 258:
+                    data = 'sdown'
                 if key == 261:
                     data = 'camrig'
                 # if action is not None:
